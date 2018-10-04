@@ -30,12 +30,6 @@ pipeline {
       }
     }
     stage('Aprobar') {
-      agent {
-        node {
-          label 'Windows'
-        }
-
-      }
       steps {
         input(message: 'Deseas aprobar el despliegue?', ok: 'Si', id: '123456')
       }
