@@ -4,24 +4,12 @@ pipeline {
     stage('Compilar') {
       parallel {
         stage('Compilar') {
-          agent {
-            node {
-              label 'ubuntu'
-            }
-
-          }
           steps {
             sh 'mvn clean package'
             archiveArtifacts(artifacts: '**/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
         stage('CheckStyle') {
-          agent {
-            node {
-              label 'ubuntu'
-            }
-
-          }
           steps {
             sh 'mvn checkstyle:checkstyle'
             checkstyle()
@@ -31,16 +19,10 @@ pipeline {
     }
     stage('Aprobar') {
       steps {
-        input(message: 'Deseas aprobar el despliegue?', ok: 'Si', id: '123456')
+        input 'asassas'
       }
     }
     stage('Despliegue') {
-      agent {
-        node {
-          label 'Windows'
-        }
-
-      }
       steps {
         copyArtifacts(projectName: 'maven-project', fingerprintArtifacts: true, flatten: true)
       }
